@@ -1,0 +1,85 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: sans-serif;
+  background-color: #c5cec7;
+}
+
+.container {
+  display: flex;
+  max-width: 50rem;
+  margin: 10rem auto;
+  padding: 2rem;
+  border-radius: 5px;
+  background-color: antiquewhite;
+  font-size: 1.6rem;
+  justify-content: center;
+}
+
+.form__title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.form__input {
+  display: block;
+  width: 100%;
+  padding: 3.5rem;
+  font-size: 1.6rem;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+  color: #333;
+  font-weight: bold;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  border: 1px solid #6f6d6d;
+  border-radius: 5px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  font-size: 1.6rem;
+  padding: 1rem;
+}
+
+div {
+  margin-bottom: 2rem;
+}
+
+input[type="submit"] {
+  background-color: #483d8b;
+  color: white; /* Màu chữ trắng để tương phản */
+  padding: 1rem 2rem; /* Thêm padding cho đẹp */
+  border: none; /* Loại bỏ border mặc định */
+  border-radius: 5px; /* Bo tròn góc */
+  font-size: 1.6rem;
+  cursor: pointer; /* Thay đổi con trỏ chuột khi di vào */
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
+}
+
+input[type="submit"]:hover {
+  background-color: #6a5acd;
+  opacity: 0.9; /* Giảm độ trong suốt khi hover */
+  box-shadow: 1px 1px 5px #7f7f7f; /* Thêm bóng đổ bên trong */
+}
+
+input:focus {
+  border-color: #6a5acd; /* Màu viền khi focus */
+  box-shadow: 0 0 5px #6a5acd; /* Thêm bóng đổ khi focus */
+  outline: none; /* Loại bỏ viền mặc định của trình duyệt */
+}

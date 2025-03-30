@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./asset/css/reset.css" />
+    <link rel="stylesheet" href="./asset/css/style.css" />
+    <title>Tạo Chữ Ký Số</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container__header">
+        <div class="form__title"><h1>Nhập thông tin cá nhân</h1></div>
+        <form action="./php/process.php" method="post" class="form__input">
+          <div class="form__input--name">
+            <label for="name">Nhập tên của bạn</label>
+            <input
+              type="text"
+              id="name"
+              class="name"
+              name="name"
+              placeholder="Nguyễn Văn A"
+              required
+            />
+          </div>
+          <div class="form__input--tel">
+            <label for="tel">Nhập Số điện thoại của bạn</label>
+            <input
+              type="tel"
+              id="tel"
+              class="tel"
+              name="tel"
+              placeholder="0xxxxxxxxx"
+              required
+            />
+          </div>
+          <div class="form__input--CCCD">
+            <label for="CCCD">Nhập số căn cước công dân</label>
+            <input
+              type="text"
+              class="CCCD"
+              id="CCCD"
+              name="CCCD"
+              placeholder="xxxxxxxxxxxx"
+              required
+            />
+          </div>
+          <div class="form__input--sumit">
+            <input type="submit" value="xác nhận" class="submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
