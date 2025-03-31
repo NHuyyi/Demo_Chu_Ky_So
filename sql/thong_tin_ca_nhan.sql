@@ -5,4 +5,8 @@ use Chu_Ky_So;
 --so_dien_thoai varchar(10) not null unique,
 --CCCD varchar(12) not null unique,
 --);
+
+
+-- TRUNCATE TABLE Thong_tin_ca_nhan;
+
 select * from Thong_tin_ca_nhan;

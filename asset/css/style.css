@@ -83,3 +83,26 @@ input:focus {
   box-shadow: 0 0 5px #6a5acd; /* Thêm bóng đổ khi focus */
   outline: none; /* Loại bỏ viền mặc định của trình duyệt */
 }
+
+.IMG {
+  background-color: white;
+}
+
+.thong_bao{
+  font-size: 1.6rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 5px;;
+}
+
+.dung{
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.sai{
+  background-color: #f8d7da;
+  color: #721c24;
+}
