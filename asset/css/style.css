@@ -97,6 +97,11 @@ input:focus {
   border-radius: 5px;;
 }
 
+.thong_bao.an {
+  display: none;
+  transition: opacity 1s ease-in-out;
+}
+
 .dung{
   background-color: #d4edda;
   color: #155724;
@@ -105,4 +110,18 @@ input:focus {
 .sai{
   background-color: #f8d7da;
   color: #721c24;
+}
+
+.img_ma_hoa{
+  width: 100%;
+  height: auto;
+}
+
+.desc{
+  font-size: 1.6rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 5px;;
 }
