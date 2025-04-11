@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "big-integer": "^1.6.52",
+    "jsrsasign": "^11.1.0"
+  }
+}

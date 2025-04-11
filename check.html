@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./asset/css/reset.css">
+    <link rel="stylesheet" href="./asset/css/style.css">
+    <title>kiểm tra chữ kí số</title>
+</head>
+<body>
+<div class="menu">
+    <ul class="bar">
+      <li><a href="./index.html" class="bar__btn">Create</a></li>
+      <li><a href="./check.html" class="bar__btn active">Check</a></li>
+    </ul>
+</div>
+
+    <div class="container">
+        <div class="container__header">
+            <div class="form__title"><h1>Kiểm tra chữ kí số</h1></div>
+            <div class="form__input" >
+                <div class="key">
+                    <div>
+                        <label >private key</label>
+                        <p>e = </p>
+                        <input
+                          type="public_key_e"
+                          id="eInput"
+                          class="public_key_e"
+                          name="public_key_e"
+                          required
+                        />
+                        <p>n = </p>
+                        <input
+                          type="public_key_n"
+                          id="nInput"
+                          class="public_key_n"
+                          name="public_key_n"
+                          required
+                        />
+                      </div>
+                    <label for="originalFile">Tải file gốc</label>
+                    <input 
+                        type="file" 
+                        class="file"
+                        id="originalFile" 
+                        name="file" 
+                        required />
+                        <label for="signatureFile">Tải file đã mã hóa</label>
+                        <input 
+                            type="file" 
+                            class="file"
+                            id="signatureFile" 
+                            name="file" 
+                            required />
+                </div>
+                <div class="form__input--submit">
+                    <input onClick="verifySignature()" type="submit" value="Xác minh chữ ký" class="submit" name="submit" />
+                </div>
+                <div id="verify_result" style="margin-top: 20px; padding: 10px;"></div>
+            </div>
+        </div>
+    </div>
+<script>
+    // Lấy tất cả liên kết trong menu
+const menuItems = document.querySelectorAll('.bar a');
+
+// Lấy URL hiện tại của trang
+const currentPage = window.location.href;
+
+// Gán class "active" cho liên kết khớp với URL hiện tại
+menuItems.forEach(item => {
+  if (item.href === currentPage) {
+    item.classList.add('active');
+  }
+});
+</script>
+<script src="handle.js"></script>
+</body>
+</html>

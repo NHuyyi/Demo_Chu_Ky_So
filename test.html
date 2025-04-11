@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chữ ký số</title>
+</head>
+<body style="font-family: Arial; padding: 20px; max-width: 700px; margin: auto;">
+  <h2>🔐 Tạo khóa RSA</h2>
+  <button onclick="generateKeys()">Tạo khóa</button><br><br>
+  <label>Khóa riêng (d):</label><br>
+  <input type="text" id="private_key" readonly style="width: 100%;"><br>
+  <label>Khóa công khai (e):</label><br>
+  <input type="text" id="public_key_e" readonly style="width: 100%;"><br>
+  <label>n:</label><br>
+  <input type="text" class="public_key_n" readonly style="width: 100%;"><br><br>
+
+  <hr>
+
+  <h2>🖋️ Ký file văn bản</h2>
+  <input type="file" id="file">
+  <button onclick="signFile()">Ký file</button>
+
+  <div id="signature_result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+
+  <hr>
+
+  <h2>✅ Xác minh chữ ký</h2>
+  <input type="file" id="verify_file"> <br><br>
+  <input type="file" id="signature_file"> <br><br>
+  <label>Khóa công khai (e):</label><br>
+  <input type="text" id="verify_e" placeholder="Nhập e" style="width: 100%;"><br>
+  <label>n:</label><br>
+  <input type="text" id="verify_n" placeholder="Nhập n" style="width: 100%;"><br><br>
+  <button onclick="verifySignature()">Xác minh</button>
+
+  <div id="verify_result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+
+  <script>
+    let e, d, n;
+
+    const smallPrimes = [11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n];
+
+    function gcd(a, b) {
+      return b === 0n ? a : gcd(b, a % b);
+    }
+
+    function modInverse(a, m) {
+      let m0 = m, x0 = 0n, x1 = 1n;
+      while (a > 1n) {
+        let q = a / m;
+        [a, m] = [m, a % m];
+        [x0, x1] = [x1 - q * x0, x0];
+      }
+      return x1 < 0n ? x1 + m0 : x1;
+    }
+
+    function getRandomPrime() {
+      return smallPrimes[Math.floor(Math.random() * smallPrimes.length)];
+    }
+
+    function generateKeys() {
+      let p = getRandomPrime();
+      let q;
+      do {
+        q = getRandomPrime();
+      } while (q === p);
+
+      n = p * q;
+      const phi = (p - 1n) * (q - 1n);
+
+      e = 101n;
+      while (gcd(e, phi) !== 1n && e < 1000n) {
+        e += 2n;
+      }
+
+      d = modInverse(e, phi);
+
+      document.getElementById('private_key').value = d.toString();
+      document.getElementById('public_key_e').value = e.toString();
+      document.querySelector('.public_key_n').value = n.toString();
+    }
+
+    function simpleHash(content, nLimit) {
+      let hash = 0n;
+      for (let i = 0; i < content.length; i++) {
+        hash = (hash + BigInt(content.charCodeAt(i))) % nLimit;
+      }
+      return hash;
+    }
+
+    function signFile() {
+      const fileInput = document.getElementById('file');
+      const file = fileInput.files[0];
+
+      if (!file || !d || !n) {
+        alert("Hãy tạo khóa và chọn file trước!");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (eFile) {
+        const content = new TextDecoder().decode(new Uint8Array(eFile.target.result));
+        const hash = simpleHash(content, n);
+        const signature = hash ** d % n;
+
+        document.getElementById('signature_result').innerHTML = `
+          <p><strong>📄 File:</strong> ${file.name}</p>
+          <p><strong>✍️ Chữ ký:</strong> ${signature}</p>
+          <p><strong>🧮 Hash (mod n):</strong> ${hash}</p>
+          <p><strong>🗝️ Khóa công khai:</strong><br>e = ${e}<br>n = ${n}</p>
+        `;
+
+        // Tạo file chữ ký
+        const blob = new Blob([signature.toString()], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.name + ".sig";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+
+    function verifySignature() {
+      const fileInput = document.getElementById('verify_file').files[0];
+      const sigInput = document.getElementById('signature_file').files[0];
+      const eText = document.getElementById('verify_e').value;
+      const nText = document.getElementById('verify_n').value;
+
+      if (!fileInput || !sigInput || !eText || !nText) {
+        alert("Vui lòng chọn file, chữ ký và nhập khóa công khai!");
+        return;
+      }
+
+      const e = BigInt(eText);
+      const n = BigInt(nText);
+
+      const fileReader = new FileReader();
+      const sigReader = new FileReader();
+
+      fileReader.onload = function (fileEvent) {
+        const content = new TextDecoder().decode(new Uint8Array(fileEvent.target.result));
+        const hash = simpleHash(content, n);
+
+        sigReader.onload = function (sigEvent) {
+          const signature = BigInt(sigEvent.target.result.trim());
+          const decryptedHash = signature ** e % n;
+
+          let result = '';
+          if (decryptedHash === hash) {
+            result = `<p style="color: green;">✅ Chữ ký hợp lệ.</p>`;
+          } else {
+            result = `<p style="color: red;">❌ Chữ ký KHÔNG hợp lệ.</p>
+                      <p>Hash gốc: ${hash}<br>Hash từ chữ ký: ${decryptedHash}</p>`;
+          }
+          document.getElementById('verify_result').innerHTML = result;
+        };
+
+        sigReader.readAsText(sigInput);
+      };
+
+      fileReader.readAsArrayBuffer(fileInput);
+    }
+  </script>
+</body>
+</html>

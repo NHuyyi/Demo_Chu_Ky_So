@@ -9,13 +9,13 @@ html {
 body {
   font-size: 1.6rem;
   font-family: sans-serif;
-  background-color: #c5cec7;
+  background-color: #e5f0f0;
 }
 
 .container {
   display: flex;
   max-width: 50rem;
-  margin: 10rem auto;
+  margin: 10.5rem auto;
   padding: 2rem;
   border-radius: 5px;
   background-color: antiquewhite;
@@ -84,17 +84,17 @@ input:focus {
   outline: none; /* Loại bỏ viền mặc định của trình duyệt */
 }
 
-.IMG {
+.file {
   background-color: white;
 }
 
-.thong_bao{
+.thong_bao {
   font-size: 1.6rem;
   margin-top: 2rem;
   text-align: center;
   font-weight: bold;
   padding: 1rem 2rem;
-  border-radius: 5px;;
+  border-radius: 5px;
 }
 
 .thong_bao.an {
@@ -102,26 +102,83 @@ input:focus {
   transition: opacity 1s ease-in-out;
 }
 
-.dung{
+.dung {
   background-color: #d4edda;
   color: #155724;
 }
 
-.sai{
+.sai {
   background-color: #f8d7da;
   color: #721c24;
 }
 
-.img_ma_hoa{
+.img_ma_hoa {
   width: 100%;
   height: auto;
 }
 
-.desc{
+.desc {
   font-size: 1.6rem;
   margin-top: 2rem;
   text-align: center;
   font-weight: bold;
   padding: 1rem 2rem;
-  border-radius: 5px;;
+  border-radius: 5px;
 }
+
+.bar {
+  width: 100%;
+  height: 10rem;
+  background-color: #98ff98;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30rem;
+}
+
+a {
+  color: #003b6f; /* Chữ xanh đen */
+  text-shadow: 1px 1px 2px #ffffff; /* Hiệu ứng bóng chữ */
+  text-decoration: none;
+}
+
+.bar__btn {
+  background-color: #a9d6e5; /* Màu nền xanh pastel */
+  border: 2px solid #003b6f; /* Đường viền xanh đen */
+  border-radius: 8px; /* Bo góc mềm mại */
+  color: #ffffff; /* Màu chữ trắng */
+  padding: 10px 20px; /* Kích thước nút */
+  font-size: 16px; /* Kích cỡ chữ */
+  cursor: pointer; /* Hiển thị con trỏ khi rê chuột */
+  transition: 0.3s; /* Hiệu ứng mượt mà khi hover */
+  margin: 0;
+}
+
+.bar__btn:hover {
+  background-color: #003b6f; /* Màu nền xanh đen khi hover */
+}
+.bar__btn:hover a {
+  color: #a9d6e5; /* Màu nền xanh đen khi hover */
+}
+
+.active {
+  background-color: #99d2e7; /* Màu nền xanh đen khi active */
+  color: #eef3f5; /* Màu chữ xanh pastel khi active */
+  border: 2px solid #a9d6e5; /* Đường viền xanh pastel khi active */
+  pointer-events: none; /* Không cho phép click khi active */
+  cursor: default; /* Con trỏ chuột không thay đổi khi active */
+}
+
+.key .private_key,
+.key .public_key_e,
+.key .public_key_n{
+  width: 86px;
+  margin-right: 40px;
+}
+
+.key p{
+  display: inline;
+}
+

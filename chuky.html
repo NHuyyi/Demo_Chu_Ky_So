@@ -1,0 +1,65 @@
+<h2>🔐 Tạo chữ ký điện tử</h2>
+<input type="file" id="fileToSign" /><br>
+<input type="text" id="private_d" placeholder="Khóa riêng d" /><br>
+<input type="text" id="modulus_n" placeholder="Modulus n" /><br>
+<button onclick="signFile()">Tạo chữ ký</button>
+
+<hr>
+
+<h2>🕵️‍♂️ Xác minh chữ ký</h2>
+<input type="file" id="originalFile" /><br>
+<input type="file" id="signatureFile" /><br>
+<input type="text" id="public_e" placeholder="Khóa công khai e" /><br>
+<input type="text" id="public_n" placeholder="Modulus n" /><br>
+<button onclick="verifySignature()">Xác minh</button>
+
+<script>
+async function signFile() {
+  const file = document.getElementById("fileToSign").files[0];
+  const d = BigInt(document.getElementById("private_d").value);
+  const n = BigInt(document.getElementById("modulus_n").value);
+  if (!file || !d || !n) return alert("Thiếu file hoặc khóa!");
+
+  const buffer = await file.arrayBuffer();
+  const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  const hashBigInt = BigInt('0x' + hashHex);
+
+  const signature = hashBigInt ** d % n;
+
+  const blob = new Blob([signature.toString()], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = file.name + ".signature.txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+async function verifySignature() {
+  const file = document.getElementById("originalFile").files[0];
+  const sigFile = document.getElementById("signatureFile").files[0];
+  const e = BigInt(document.getElementById("public_e").value);
+  const n = BigInt(document.getElementById("public_n").value);
+  if (!file || !sigFile || !e || !n) return alert("Thiếu file hoặc khóa!");
+
+  const fileBuffer = await file.arrayBuffer();
+  const hashBuffer = await crypto.subtle.digest("SHA-256", fileBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  const fileHash = BigInt('0x' + hashHex);
+
+  const sigText = await sigFile.text();
+  const sig = BigInt(sigText.trim());
+
+  const decryptedHash = sig ** e % n;
+
+  if (decryptedHash === fileHash) {
+    alert("✅ Chữ ký hợp lệ! File chưa bị chỉnh sửa.");
+  } else {
+    alert("❌ Chữ ký KHÔNG hợp lệ. File có thể đã bị thay đổi.");
+  }
+}
+</script>

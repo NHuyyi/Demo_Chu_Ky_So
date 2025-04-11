@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./asset/css/reset.css" />
+  <link rel="stylesheet" href="./asset/css/style.css" />
+  <title>Tạo Chữ Ký Số</title>
+</head>
+<body>
+<div class="menu">
+    <ul class="bar">
+      <li><a href="./index.html" class="bar__btn active">Create</a></li>
+      <li><a href="./check.html" class="bar__btn">Check</a></li>
+    </ul>
+</div>
+  <div class="container">
+    <div class="container__header">
+        <div class="form__title"><h1>Tạo chữ kí số</h1></div>
+      <div class="form__input">
+        <div class="key">
+          <div>
+            <label >Khóa riêng tư (d, n): </label>
+            <p>d = </p>
+            <input
+              type="text"
+              id="private_key"
+              class="private_key"
+              name="private_key"
+              required
+            />
+            <p>n = </p>
+            <input
+              type="public_key_n"
+              id="public_key_n"
+              class="public_key_n"
+              name="public_key_n"
+              required
+            />
+          </div>
+            <div>
+              <label for="private_key">Khóa công khai (e, n): </label>
+              <p>e = </p>
+              <input
+                type="text"
+                id="public_key_e"
+                class="public_key_e"
+                name="public_key_e"
+                required
+              />
+              <p>n = </p>
+              <input
+                type="public_key_n"
+                id="public_key_n"
+                class="public_key_n"
+                name="public_key_n"
+                required
+              />
+            </div>
+        </div>
+        <input onclick="generateKeys()" id="create_key" type="submit" value="Tạo khóa" class="submit" />
+        <div class="form__input--IMG">
+          <label for="IMG">Tải file cần ký</label>
+          <input
+            type="file"
+            class="file"
+            id="file"
+            name="file"
+            required
+          />
+        </div>
+        <div class="form__input--submit">
+          <input onClick="signFile()" type="submit" value="Tạo chữ ký" class="submit" />
+        </div>
+        <div id="signature_result" style="margin-top: 20px; padding: 10px;"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const thongBaos = document.querySelectorAll(".thong_bao");
+  thongBaos.forEach(thongBao => {
+    setTimeout(() => {
+      thongBao.classList.add("an");
+    }, 2000);
+  });
+});
+
+// Lấy tất cả liên kết trong menu
+const menuItems = document.querySelectorAll('.bar a');
+
+// Lấy URL hiện tại của trang
+const currentPage = window.location.href;
+
+// Gán class "active" cho liên kết khớp với URL hiện tại
+menuItems.forEach(item => {
+  if (item.href === currentPage) {
+    item.classList.add('active');
+  }
+});
+</script>
+<script src="handle.js"></script>
+</body>
+</html>
+
